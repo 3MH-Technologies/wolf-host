@@ -1,0 +1,45 @@
+name: Wolf Host CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+          pip install ruff
+      - name: Run ruff
+        run: cd backend && ruff check app
+
+  frontend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: cd frontend && npm install
+      - name: Build
+        run: cd frontend && npm run build
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: [backend-lint, frontend-lint]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build backend image
+        run: docker build -f docker/backend/Dockerfile -t wolfhost-backend:ci .
+      - name: Build frontend image
+        run: docker build -f docker/frontend/Dockerfile -t wolfhost-frontend:ci .
