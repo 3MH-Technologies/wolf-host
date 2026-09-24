@@ -87,3 +87,5 @@ notifications
 - `users` 1─N `subscriptions`, `invoices`
 - `plans` 1─N `subscriptions`, `invoices`
 - `users` 1─N `audit_logs` (SET NULL عند حذف المستخدم للحفاظ على السجل)
+
+© 3MH Technologies — https://3mh.pages.dev/ — https://t.me/j49_c

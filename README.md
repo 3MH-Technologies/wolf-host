@@ -1,5 +1,8 @@
 # Wolf Host
 
+[![Wolf Host CI](https://github.com/3MH-Technologies/wolf-host/actions/workflows/ci.yml/badge.svg)](https://github.com/3MH-Technologies/wolf-host/actions/workflows/ci.yml)
+[![License: All Rights Reserved](https://img.shields.io/badge/license-All%20Rights%20Reserved-red)](LICENSE)
+
 منصة استضافة احترافية لبوتات بايثون — مشابهة في تجربتها لـ Railway وCoolify وPterodactyl، مبنية بالكامل بمعايير Production.
 
 **3MH Technologies** | https://3mh.pages.dev/ar/
@@ -7,17 +10,17 @@
 ## المزايا
 
 - تشغيل كل بوت داخل Docker Container معزول تمامًا (لا صلاحيات مرتفعة، لا وصول لـ Host، حدود CPU/RAM/Disk/Processes)
-- رفع الكود عبر ZIP، ملف واحد، أو Git Repository
+- رفع الكود عبر ZIP أو ملف واحد (الرفع من Git Repository قريباً)
 - اكتشاف وتثبيت المكتبات تلقائيًا (requirements.txt أو تحليل imports)
 - سجلات مباشرة (Live Logs) عبر Server-Sent Events
 - مدير ملفات كامل (رفع، تعديل، حذف، نقل، نسخ)
 - طرفية محدودة الصلاحيات لكل بوت
 - إعادة تشغيل تلقائي عند التعطل (مراقبة دورية عبر Celery)
 - نظام خطط واشتراكات (Free / Basic / Pro / Enterprise)
-- مدفوعات عبر Stripe وPayPal وUSDT (TRC20 / BEP20) مع تحقق فعلي من المعاملات
+- مدفوعات عبر Stripe (تأكيد عبر Webhook) وUSDT (TRC20 / BEP20) مع تحقق فعلي من المعاملات — PayPal قيد التطوير
 - كوبونات خصم
 - لوحة إدارة كاملة: إحصائيات، إدارة مستخدمين، إيقاف/حذف قسري للبوتات
-- مصادقة ثنائية (2FA / TOTP)، إدارة الجلسات والأجهزة، مفاتيح API
+- مصادقة ثنائية (2FA / TOTP)، إدارة الجلسات والأجهزة (إنشاء مفاتيح API متوفر، والمصادقة بها قريباً)
 - سجل تدقيق كامل (Audit Log) لكل الإجراءات الحساسة
 - واجهة عربية/إنجليزية مع دعم RTL كامل، وضع داكن
 
@@ -35,14 +38,15 @@
 ## البدء السريع
 
 ```bash
-git clone <repo-url> wolfhost
+git clone https://github.com/3MH-Technologies/wolf-host.git wolfhost
 cd wolfhost
 cp .env.example .env
 # عدّل .env وضع القيم الحقيقية (كلمات مرور، مفاتيح API، إلخ)
 ./scripts/deploy.sh
 ```
 
-المنصة ستكون متاحة على `https://yourdomain.com` بعد إعداد شهادات SSL في `nginx/certs/`.
+- إن لم توجد شهادة SSL في `nginx/certs/`، ينشئ `deploy.sh` شهادة ذاتية التوقيع تلقائيًا (صالحة للاختبار — استبدلها بشهادة حقيقية، مثل Let's Encrypt، في الإنتاج).
+- المنصة ستكون متاحة على `https://yourdomain.com` بعد ضبط `NEXT_PUBLIC_API_URL` و`CORS_ORIGINS` في `.env`.
 
 ## التطوير المحلي
 
@@ -67,8 +71,10 @@ wolfhost/
 └── docker-compose.yml
 ```
 
-مزيد من التفاصيل: [الهيكلة المعمارية](docs/ARCHITECTURE.md) · [توثيق الـ API](docs/API.md) · [دليل النشر](docs/DEPLOYMENT.md)
+مزيد من التفاصيل: [الهيكلة المعمارية](docs/ARCHITECTURE.md) · [توثيق الـ API](docs/API.md) · [دليل النشر](docs/DEPLOYMENT.md) · [توثيق Docker](docs/DOCKER.md) · [مخطط قاعدة البيانات](docs/ER_DIAGRAM.md) · [سياسة الأمان](.github/SECURITY.md)
 
 ## الترخيص
 
-جميع الحقوق محفوظة — 3MH Technologies | https://3mh.pages.dev/ar/
+جميع الحقوق محفوظة — راجع [LICENSE](LICENSE).
+
+© 3MH Technologies — https://3mh.pages.dev/ — https://t.me/j49_c

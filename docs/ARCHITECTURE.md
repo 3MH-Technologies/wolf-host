@@ -42,7 +42,7 @@ Wolf Host عبارة عن نظام موزع بأربع طبقات رئيسية: 
 
 ## تدفق تشغيل بوت جديد
 
-1. المستخدم يرفع الكود (ZIP / ملف واحد / Git URL)
+1. المستخدم يرفع الكود (ZIP أو ملف واحد — رفع Git URL قريباً)
 2. `FileManager` يحفظ الملفات في `storage_path` الخاص بالمستخدم مع تحقق من Path Traversal
 3. عند الضغط على "تشغيل": `BotService.start_bot` يستدعي `FileManager.detect_requirements()` لاكتشاف المكتبات المطلوبة
 4. `DockerEngine.create_and_start` ينشئ Container جديد بالحدود المحددة في خطة المستخدم، وينفذ `pip install` ثم يشغّل نقطة الدخول
@@ -58,4 +58,6 @@ Wolf Host عبارة عن نظام موزع بأربع طبقات رئيسية: 
 
 ## طبقة الفوترة
 
-الفواتير مستقلة عن حالة الاشتراك؛ عند تأكيد الدفع (Webhook من Stripe، أو تحقق يدوي من TronGrid/BscScan لعملة USDT) يتم إنشاء `Subscription` جديد وربط الخطة بالمستخدم. الاشتراكات المنتهية تُغلق تلقائيًا عبر مهمة Celery دورية.
+الفواتير مستقلة عن حالة الاشتراك؛ عند تأكيد الدفع (Webhook من Stripe، أو تحقق يدوي من TronGrid/BscScan لعملة USDT) يتم إنشاء `Subscription` جديد وربط الخطة بالمستخدم. الاشتراكات المنتهية تُغلق تلقائيًا عبر مهمة Celery دورية. (PayPal قيد التطوير.)
+
+© 3MH Technologies — https://3mh.pages.dev/ — https://t.me/j49_c

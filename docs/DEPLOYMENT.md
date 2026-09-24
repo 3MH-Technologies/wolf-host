@@ -18,7 +18,7 @@ newgrp docker
 ## 2. استنساخ المشروع
 
 ```bash
-git clone <repo-url> wolfhost
+git clone https://github.com/3MH-Technologies/wolf-host.git wolfhost
 cd wolfhost
 cp .env.example .env
 ```
@@ -39,6 +39,8 @@ cp /etc/letsencrypt/live/yourdomain.com/fullchain.pem nginx/certs/
 cp /etc/letsencrypt/live/yourdomain.com/privkey.pem nginx/certs/
 ```
 
+> ملاحظة: إن تخطّيت هذه الخطوة، ينشئ `scripts/deploy.sh` شهادة ذاتية التوقيع تلقائيًا في `nginx/certs/` حتى لا تفشل نقطة الإقلاع — لكن يُوصى باستبدالها بشهادة حقيقية في الإنتاج.
+
 ## 4. النشر
 
 ```bash
@@ -46,11 +48,12 @@ cp /etc/letsencrypt/live/yourdomain.com/privkey.pem nginx/certs/
 ```
 
 هذا السكريبت يقوم بـ:
-1. بناء صور Docker (backend, frontend)
-2. تشغيل PostgreSQL وRedis أولًا
-3. تنفيذ Alembic migrations
-4. تعبئة الخطط الافتراضية وإنشاء حساب المدير
+1. إنشاء شهادة SSL ذاتية التوقيع في `nginx/certs/` إن لم توجد (استبدلها بشهادة حقيقية في الإنتاج)
+2. بناء صور Docker (backend, frontend)
+3. تشغيل PostgreSQL وRedis أولًا
+4. تنفيذ Alembic migrations (إن وُجدت إصدارات — والـ backend ينشئ الجدول تلقائيًا عند الإقلاع إذا لم توجد)
 5. تشغيل باقي الخدمات (backend, celery_worker, celery_beat, frontend, nginx)
+6. تعبئة الخطط الافتراضية وإنشاء حساب المدير بعد التأكد من جاهزية الـ backend
 
 ## 5. التحقق
 
@@ -99,3 +102,5 @@ docker compose up -d
 | فشل رفع الملفات | تحقق من `MAX_UPLOAD_SIZE_MB` في `.env` وحدود `client_max_body_size` في nginx.conf |
 | Rate Limiting شديد | عدّل `RATE_LIMIT_PER_MINUTE` في `.env` |
 | فشل الاتصال بقاعدة البيانات | تأكد من صحة `POSTGRES_PASSWORD` في كل من `.env` و`docker-compose.yml` |
+
+© 3MH Technologies — https://3mh.pages.dev/ — https://t.me/j49_c

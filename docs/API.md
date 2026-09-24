@@ -24,6 +24,8 @@
 
 جميع المسارات المحمية تتطلب `Authorization: Bearer <access_token>`.
 
+> ملاحظة: إنشاء مفاتيح API عبر `/users/me/api-keys` متوفر، لكن استخدام مفاتيح API في المصادقة "قريباً" — المعاملات الحالية عبر Bearer token فقط.
+
 ## المستخدم (`/users`)
 
 | Method | Path | الوصف |
@@ -61,7 +63,7 @@
 | Method | Path | الوصف |
 |---|---|---|
 | GET | `/billing/plans` | الخطط المتاحة |
-| POST | `/billing/invoices` | إنشاء فاتورة (Stripe/PayPal/USDT) |
+| POST | `/billing/invoices` | إنشاء فاتورة (Stripe أو USDT — PayPal قيد التطوير) |
 | GET | `/billing/invoices` | فواتير المستخدم |
 | POST | `/billing/invoices/{id}/confirm-crypto` | تأكيد دفع USDT بهاش المعاملة |
 | POST | `/billing/webhooks/stripe` | Webhook استقبال أحداث Stripe |
@@ -79,3 +81,5 @@
 | DELETE | `/admin/bots/{id}/force-delete` | حذف قسري |
 | POST | `/admin/coupons` | إنشاء كوبون خصم |
 | GET | `/admin/docker/containers` | حاويات Docker المُدارة |
+
+© 3MH Technologies — https://3mh.pages.dev/ — https://t.me/j49_c

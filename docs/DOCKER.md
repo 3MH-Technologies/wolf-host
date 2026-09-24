@@ -19,6 +19,8 @@
 
 ## Volumes
 
+اسم المشروع ثابت في `docker-compose.yml` عبر `name: wolfhost`، لذلك تبدأ أسماء الVolumes بـ `wolfhost_` (مثل `wolfhost_bots_storage`):
+
 - `postgres_data`: بيانات PostgreSQL
 - `redis_data`: بيانات Redis (AOF)
 - `bots_storage`: ملفات كل البوتات (مقسّمة حسب `user_id/bot_slug`)
@@ -63,3 +65,5 @@ nano_cpus=<حسب خطة المستخدم>
 ```
 
 لا يوجد Host Mount لأي مسار خارج مجلد البوت نفسه، ولا وصول إلى `/var/run/docker.sock` من داخل حاويات البوتات.
+
+© 3MH Technologies — https://3mh.pages.dev/ — https://t.me/j49_c
