@@ -13,7 +13,7 @@ export function Sidebar() {
   const { t, toggleLocale, locale } = useLocale();
   const { user, logout } = useAuth();
 
-  const links = [
+  const links: { href: string; label: string; icon: typeof LayoutDashboard }[] = [
     { href: "/dashboard", label: t.nav_dashboard, icon: LayoutDashboard },
     { href: "/dashboard/bots", label: t.nav_bots, icon: Bot },
     { href: "/dashboard/billing", label: t.nav_billing, icon: CreditCard },

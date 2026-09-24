@@ -53,13 +53,17 @@ async def upload_bot_file(bot_id: uuid.UUID, file: UploadFile = File(...), user:
     if len(content) > settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024:
         raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="file_too_large")
 
+    filename = file.filename
+    if not filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="filename_required")
+
     fm = FileManager(bot.storage_path)
     try:
-        if file.filename.endswith(".zip"):
-            zip_path = await fm.save_upload(file.filename, content)
+        if filename.endswith(".zip"):
+            zip_path = await fm.save_upload(filename, content)
             fm.extract_zip(zip_path)
         else:
-            await fm.save_upload(file.filename, content)
+            await fm.save_upload(filename, content)
     except FileManagerError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
     return {"message": "uploaded"}

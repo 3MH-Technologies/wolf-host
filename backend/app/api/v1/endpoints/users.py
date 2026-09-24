@@ -32,7 +32,7 @@ async def change_password(current_password: str, new_password: str, user: User =
 
 @router.get("/me/sessions")
 async def list_sessions(user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(UserSession).where(UserSession.user_id == user.id, UserSession.is_revoked == False))
+    result = await db.execute(select(UserSession).where(UserSession.user_id == user.id, UserSession.is_revoked.is_(False)))
     sessions = result.scalars().all()
     return [
         {"id": str(s.id), "ip_address": s.ip_address, "device_label": s.device_label,

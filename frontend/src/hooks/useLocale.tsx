@@ -5,7 +5,7 @@ import { dictionary, Locale } from "@/lib/dictionary";
 
 interface LocaleContextValue {
   locale: Locale;
-  t: typeof dictionary["ar"];
+  t: (typeof dictionary)[Locale];
   toggleLocale: () => void;
 }
 

@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 
 from app.db.session import get_db
-from app.models.user import User, UserRole
+from app.models.user import User
 from app.models.bot import Bot, BotStatus
 from app.models.payment import Invoice, PaymentStatus
 from app.models.payment import Coupon

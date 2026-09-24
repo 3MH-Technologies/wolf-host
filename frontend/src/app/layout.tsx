@@ -5,6 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Wolf Host — منصة استضافة بوتات بايثون",
   description: "Wolf Host — Professional Python bot hosting platform",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

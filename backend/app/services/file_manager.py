@@ -1,10 +1,7 @@
-import os
 import shutil
 import zipfile
 import aiofiles
 from pathlib import Path
-
-from app.core.config import settings
 
 DANGEROUS_EXTENSIONS = {".so", ".dll", ".exe", ".sh", ".bin"}
 

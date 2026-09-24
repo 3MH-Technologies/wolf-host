@@ -20,7 +20,7 @@ class BillingServiceError(Exception):
 
 class BillingService:
     async def apply_coupon(self, db: AsyncSession, code: str, amount: Decimal) -> tuple[Decimal, Coupon | None]:
-        result = await db.execute(select(Coupon).where(Coupon.code == code, Coupon.is_active == True))
+        result = await db.execute(select(Coupon).where(Coupon.code == code, Coupon.is_active.is_(True)))
         coupon = result.scalar_one_or_none()
         if coupon is None:
             raise BillingServiceError("invalid_coupon")

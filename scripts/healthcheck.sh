@@ -3,21 +3,29 @@ set -euo pipefail
 
 echo "Checking Wolf Host services health..."
 
+# Production compose publishes only nginx (80/443), so probes go through nginx.
+# Only 2xx counts as healthy — a 301 redirect from port 80 to https is not enough.
 check_service() {
   local name="$1"
-  local url="$2"
-  if curl -sf "$url" > /dev/null 2>&1; then
-    echo "  [OK] $name"
-  else
-    echo "  [FAIL] $name"
-    return 1
-  fi
+  shift
+  local url code
+  for url in "$@"; do
+    code=$(curl -ksS -o /dev/null -w '%{http_code}' --max-time 10 "$url" 2>/dev/null) || code="000"
+    case "$code" in
+      2??)
+        echo "  [OK] $name ($url)"
+        return 0
+        ;;
+    esac
+  done
+  echo "  [FAIL] $name"
+  return 1
 }
 
 FAILED=0
 
-check_service "Backend API" "http://localhost:8000/api/health" || FAILED=1
-check_service "Frontend" "http://localhost:3000" || FAILED=1
+check_service "Backend API" "https://localhost/api/health" "http://localhost/api/health" || FAILED=1
+check_service "Frontend" "https://localhost/" "http://localhost/" || FAILED=1
 
 if docker compose exec -T postgres pg_isready -U "${POSTGRES_USER:-wolfhost}" > /dev/null 2>&1; then
   echo "  [OK] PostgreSQL"

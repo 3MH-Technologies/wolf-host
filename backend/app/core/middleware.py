@@ -4,8 +4,6 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 import redis.asyncio as redis
 
-from app.core.config import settings
-
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):

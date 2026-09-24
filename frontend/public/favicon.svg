@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wolf Host">
+  <rect width="64" height="64" rx="14" fill="#0B1220"/>
+  <path d="M12 14l11 6 9 14 9-14 11-6-6 21-5 7-9 8-9-8-5-7-6-21z" fill="#38BDF8"/>
+  <path d="M27 40l5 4 5-4-5 9-5-9z" fill="#0B1220"/>
+</svg>

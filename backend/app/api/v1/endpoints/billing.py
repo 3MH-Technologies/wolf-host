@@ -16,7 +16,7 @@ router = APIRouter(prefix="/billing", tags=["billing"])
 
 @router.get("/plans", response_model=list[PlanResponse])
 async def list_plans(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Plan).where(Plan.is_active == True))
+    result = await db.execute(select(Plan).where(Plan.is_active.is_(True)))
     return result.scalars().all()
 
 

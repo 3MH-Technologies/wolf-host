@@ -12,7 +12,7 @@ from app.services.docker_engine import docker_engine
 
 async def _monitor_bots_health() -> None:
     async with AsyncSessionLocal() as db:
-        result = await db.execute(select(Bot).where(Bot.status == BotStatus.RUNNING, Bot.auto_restart == True))
+        result = await db.execute(select(Bot).where(Bot.status == BotStatus.RUNNING, Bot.auto_restart.is_(True)))
         bots = result.scalars().all()
         for bot in bots:
             docker_status = await docker_engine.get_status(bot.container_name)
